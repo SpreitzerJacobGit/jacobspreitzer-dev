@@ -90,29 +90,48 @@ ${contextText
   : 'No specific context was retrieved for this query. Answer only from what you know from your general training, and be upfront if you are uncertain.'
 }`;
 
-  // Generate response via Workers AI (streaming)
+  // Generate response via Workers AI
+  let result;
   try {
-    const aiStream = await env.AI.run(GENERATION_MODEL, {
-      stream: true,
+    result = await env.AI.run(GENERATION_MODEL, {
       max_tokens: MAX_TOKENS,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: message },
       ],
     });
-
-    return new Response(aiStream, {
-      headers: {
-        ...cors,
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'X-Accel-Buffering': 'no',
-      },
-    });
   } catch (err) {
-    return new Response(JSON.stringify({ error: 'Generation failed' }), {
+    return new Response(JSON.stringify({ error: 'Generation failed', detail: err.message }), {
       status: 500,
       headers: { ...cors, 'Content-Type': 'application/json' },
     });
   }
+
+  // Convert to SSE stream so the frontend streaming logic works unchanged
+  const text = result.response ?? '';
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    start(controller) {
+      // Emit words with a small gap so the frontend renders progressively
+      const words = text.split(/(\s+)/);
+      for (const word of words) {
+        if (word) {
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ response: word })}\n\n`)
+          );
+        }
+      }
+      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      ...cors,
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'X-Accel-Buffering': 'no',
+    },
+  });
 }

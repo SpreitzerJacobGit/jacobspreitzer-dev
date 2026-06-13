@@ -8,3 +8,7 @@ binding = "AI"
 [[vectorize]]
 binding = "VECTORIZE"
 index_name = "jacobspreitzer-knowledge"
+
+[[kv_namespaces]]
+binding = "RATE_LIMITS"
+id = "e0af1fc77b0d4063bafcee92049e0d64"
