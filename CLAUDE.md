@@ -25,7 +25,7 @@ This file is read automatically by Claude Code at the start of every session. It
 - **API:** Cloudflare Pages Functions (edge runtime, `/functions/api/`)
 - **Vector DB:** Cloudflare Vectorize (index: `jacobspreitzer-knowledge`, 768d cosine)
 - **Embeddings:** Cloudflare Workers AI — `@cf/baai/bge-base-en-v1.5`
-- **LLM:** Anthropic Claude — `claude-haiku-4-5-20251001` for chat (fast, cost-effective)
+- **LLM:** Cloudflare Workers AI — `@cf/meta/llama-3.1-8b-instruct` for chat (free tier, no external API key)
 - **CI/CD:** GitHub Actions → wrangler CLI
 - **Fonts (CDN):** Lora, DM Sans, DM Mono (Google Fonts)
 - **3D:** Three.js r128 (CDN)
@@ -117,7 +117,7 @@ CLAUDE.md                      # This file — AI session context
 - **Vectorize index:** `jacobspreitzer-knowledge` (768 dimensions, cosine metric, preset: `@cf/baai/bge-base-en-v1.5`)
 - **GitHub repo:** `https://github.com/SpreitzerJacobGit/jacobspreitzer-dev`
 - **GitHub Actions secrets set:** `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
-- **Pages secrets set:** `ANTHROPIC_API_KEY`
+- **Pages secrets set:** none (all AI via Workers AI binding, no external keys needed)
 
 ---
 
@@ -129,7 +129,7 @@ The chat widget is a RAG pipeline. When a user sends a message:
 2. The function embeds the user query via `env.AI.run('@cf/baai/bge-base-en-v1.5', { text: message })`
 3. Queries `env.VECTORIZE.query(vector, { topK: 5, returnMetadata: 'all' })`
 4. Builds a system prompt with persona + guardrails + retrieved context chunks
-5. Calls Anthropic API with `stream: true`, `max_tokens: 600`, model `claude-haiku-4-5-20251001`
+5. Calls `env.AI.run('@cf/meta/llama-3.1-8b-instruct', { stream: true, max_tokens: 600, messages: [...] })`
 6. Forwards the SSE stream directly to the browser
 7. Frontend reads the stream via `response.body.getReader()` and renders tokens as they arrive
 
@@ -180,10 +180,7 @@ node scripts/ingest.js
 python3 -m http.server
 ```
 
-Secrets for local dev go in `.dev.vars` (gitignored):
-```
-ANTHROPIC_API_KEY=sk-ant-...
-```
+No secrets are needed for local dev — Workers AI and Vectorize are accessed via the bindings defined in `wrangler.toml`, which `wrangler pages dev` resolves automatically using your logged-in Cloudflare account.
 
 ---
 

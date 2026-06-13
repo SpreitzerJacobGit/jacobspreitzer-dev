@@ -109,10 +109,12 @@ User message
     → Workers AI embedding (@cf/baai/bge-base-en-v1.5)
     → Vectorize query (top-5 semantic matches)
     → Build prompt: system persona + guardrails + retrieved context
-    → Anthropic Claude API (claude-haiku-4-5, streaming)
+    → Workers AI generation (@cf/meta/llama-3.1-8b-instruct, streaming)
   → SSE stream to browser
   → Token-by-token render in chat widget
 ```
+
+The entire stack runs on Cloudflare — no external API keys or additional billing required beyond the existing Cloudflare account.
 
 ### Knowledge base
 
@@ -130,8 +132,7 @@ The `knowledge/` directory contains markdown files about Jacob. Any `.md` file a
 |---|---|---|
 | Pages project | `jacobspreitzer-dev` | Hosts the site + Functions |
 | Vectorize index | `jacobspreitzer-knowledge` | Vector storage (768d, cosine) |
-| Workers AI binding | `AI` | Generates embeddings |
-| Pages secret | `ANTHROPIC_API_KEY` | Claude API access |
+| Workers AI binding | `AI` | Embeddings + text generation (all free tier) |
 
 ### GitHub Actions secrets required
 
@@ -139,7 +140,6 @@ The `knowledge/` directory contains markdown files about Jacob. Any `.md` file a
 |---|---|
 | `CLOUDFLARE_API_TOKEN` | Deploy (Pages:Edit) + Ingest (AI:Read, Vectorize:Edit) |
 | `CLOUDFLARE_ACCOUNT_ID` | `1d5aae43ba2cc8bc0817e5032247c734` |
-| `ANTHROPIC_API_KEY` | Set as a Pages secret via wrangler, not GitHub |
 
 ---
 
