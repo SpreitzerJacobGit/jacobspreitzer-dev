@@ -642,6 +642,172 @@ footer {
   background: var(--border-subtle);
 }
 
+/* WATER WIDGET */
+#water-widget {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 201;
+  cursor: pointer;
+  user-select: none;
+}
+
+.water-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.65rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+#water-widget:hover .water-compact {
+  border-color: var(--border);
+  transform: translateY(-2px);
+}
+
+#water-widget.water-open .water-compact {
+  border-color: var(--border);
+}
+
+.water-drop-icon {
+  width: 13px;
+  height: 13px;
+  fill: var(--accent);
+  flex-shrink: 0;
+}
+
+.water-compact-amount {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  min-width: 2ch;
+}
+
+.water-compact-unit {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.water-compact-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.water-expanded-panel {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 210px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+
+#water-widget.water-open .water-expanded-panel {
+  display: block;
+}
+
+.water-exp-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
+.water-exp-header .water-drop-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.water-exp-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.63rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.water-exp-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  margin-bottom: 0.2rem;
+}
+
+#water-total-amount {
+  font-family: 'DM Mono', monospace;
+  font-size: 2.1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+}
+
+.water-exp-unit {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.water-exp-sub {
+  font-size: 0.73rem;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+}
+
+.water-exp-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0.6rem 0;
+}
+
+.water-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.water-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.water-row span:last-child {
+  color: var(--text);
+}
+
+.water-exp-note {
+  font-size: 0.64rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@keyframes water-pulse {
+  0%   { transform: scale(1);    }
+  40%  { transform: scale(1.06); }
+  100% { transform: scale(1);    }
+}
+
+#water-widget.water-pulse .water-compact {
+  animation: water-pulse 0.45s ease-out;
+}
+
+@media (max-width: 700px) {
+  #water-widget { bottom: 5.5rem; left: 1rem; }
+}
+
 /* SCROLL FADE */
 .fade-in {
   opacity: 0;

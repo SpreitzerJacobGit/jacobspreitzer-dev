@@ -340,6 +340,36 @@
   </div>
 </div>
 
+<!-- WATER WIDGET -->
+<div id="water-widget" role="status" aria-live="polite" aria-label="AI water footprint">
+  <div class="water-compact">
+    <svg class="water-drop-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2C12 2 4 10 4 15a8 8 0 0 0 16 0C20 10 12 2 12 2z"/>
+    </svg>
+    <span id="water-compact-amount" class="water-compact-amount">0.0</span>
+    <span class="water-compact-unit">mL</span>
+    <span class="water-compact-label">AI water</span>
+  </div>
+  <div class="water-expanded-panel">
+    <div class="water-exp-header">
+      <svg class="water-drop-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 2C12 2 4 10 4 15a8 8 0 0 0 16 0C20 10 12 2 12 2z"/>
+      </svg>
+      <span class="water-exp-title">AI Water Footprint</span>
+    </div>
+    <div class="water-exp-total">
+      <span id="water-total-amount">0.0</span>
+      <span class="water-exp-unit">mL</span>
+    </div>
+    <p class="water-exp-sub">evaporated this session</p>
+    <div class="water-exp-divider"></div>
+    <div id="water-breakdown" class="water-breakdown"></div>
+    <div class="water-exp-divider"></div>
+    <p class="water-exp-note">Llama 3.1 8B · Cloudflare Workers AI<br>~1.5 mL/query · WUE 1.8 L/kWh<br>Li et al. (2023) + Patterson et al. (2022)</p>
+  </div>
+</div>
+
 <script src="js/chat.js"></script>
+<script src="js/water-widget.js"></script>
 </body>
 </html>
