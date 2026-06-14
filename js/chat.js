@@ -205,4 +205,110 @@
   function scrollToBottom() {
     messages.scrollTop = messages.scrollHeight;
   }
+
+  // ── Drag and resize ───────────────────────────────────────────────────────
+  (function () {
+    const header  = panel.querySelector('.chat-header');
+    const MIN_W   = 300;
+    const MIN_H   = 300;
+    const CURSORS = {
+      n: 'ns-resize',   s: 'ns-resize',
+      e: 'ew-resize',   w: 'ew-resize',
+      nw: 'nwse-resize', ne: 'nesw-resize',
+      sw: 'nesw-resize', se: 'nwse-resize',
+    };
+    let pinned = true;
+    let drag = null, resize = null;
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    function pin2free() {
+      if (!pinned) return;
+      pinned = false;
+      const r = panel.getBoundingClientRect();
+      panel.style.bottom = 'auto';
+      panel.style.right  = 'auto';
+      panel.style.left   = r.left   + 'px';
+      panel.style.top    = r.top    + 'px';
+      panel.style.width  = r.width  + 'px';
+      panel.style.height = r.height + 'px';
+    }
+
+    // Drag via header
+    header.addEventListener('mousedown', e => {
+      if (e.button !== 0 || e.target.closest('button, .chat-resize')) return;
+      e.preventDefault();
+      pin2free();
+      drag = {
+        x0: e.clientX, y0: e.clientY,
+        l0: parseFloat(panel.style.left),
+        t0: parseFloat(panel.style.top),
+      };
+      document.body.style.cursor = 'move';
+    });
+
+    // Resize via edge/corner handles injected into the panel
+    ['n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'].forEach(dir => {
+      const el = document.createElement('div');
+      el.className = `chat-resize chat-resize-${dir}`;
+      panel.appendChild(el);
+      el.addEventListener('mousedown', e => {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        pin2free();
+        const r = panel.getBoundingClientRect();
+        resize = {
+          dir,
+          x0: e.clientX, y0: e.clientY,
+          l0: r.left, t0: r.top, w0: r.width, h0: r.height,
+        };
+        document.body.style.cursor = CURSORS[dir];
+      });
+    });
+
+    document.addEventListener('mousemove', e => {
+      if (drag) {
+        const dx = e.clientX - drag.x0;
+        const dy = e.clientY - drag.y0;
+        panel.style.left = clamp(drag.l0 + dx, 0, window.innerWidth  - panel.offsetWidth) + 'px';
+        panel.style.top  = clamp(drag.t0 + dy, 0, window.innerHeight - 60) + 'px';
+      }
+
+      if (resize) {
+        const { dir, x0, y0, l0, t0, w0, h0 } = resize;
+        const dx = e.clientX - x0;
+        const dy = e.clientY - y0;
+        let L = l0, T = t0, W = w0, H = h0;
+
+        if (dir.includes('e')) W = w0 + dx;
+        if (dir.includes('s')) H = h0 + dy;
+        if (dir.includes('w')) W = w0 - dx;
+        if (dir.includes('n')) H = h0 - dy;
+
+        W = clamp(W, MIN_W, window.innerWidth  - 16);
+        H = clamp(H, MIN_H, window.innerHeight - 16);
+
+        // Re-anchor left/top for w/n directions after clamping
+        if (dir.includes('w')) L = l0 + w0 - W;
+        if (dir.includes('n')) T = t0 + h0 - H;
+
+        L = clamp(L, 0, window.innerWidth  - W);
+        T = clamp(T, 0, window.innerHeight - H);
+
+        panel.style.left   = L + 'px';
+        panel.style.top    = T + 'px';
+        panel.style.width  = W + 'px';
+        panel.style.height = H + 'px';
+      }
+    });
+
+    const endInteraction = () => {
+      drag = null;
+      resize = null;
+      document.body.style.cursor = '';
+    };
+    document.addEventListener('mouseup',    endInteraction);
+    document.addEventListener('mouseleave', endInteraction);
+  })();
 })();

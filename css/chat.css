@@ -116,6 +116,9 @@
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+  cursor: move;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .chat-header-dot {
   width: 8px;
@@ -295,6 +298,33 @@
   height: 16px;
   fill: #1a1f14;
 }
+
+/* Drag & resize handles — injected via JS */
+.chat-resize {
+  position: absolute;
+  z-index: 20;
+}
+.chat-resize-n  { top: 0;    left: 14px; right: 14px; height: 8px;  cursor: ns-resize; }
+.chat-resize-s  { bottom: 0; left: 14px; right: 14px; height: 8px;  cursor: ns-resize; }
+.chat-resize-e  { right: 0;  top: 14px;  bottom: 14px; width: 8px;  cursor: ew-resize; }
+.chat-resize-w  { left: 0;   top: 14px;  bottom: 14px; width: 8px;  cursor: ew-resize; }
+.chat-resize-nw { top: 0;    left: 0;    width: 14px; height: 14px; cursor: nwse-resize; }
+.chat-resize-ne { top: 0;    right: 0;   width: 14px; height: 14px; cursor: nesw-resize; }
+.chat-resize-sw { bottom: 0; left: 0;    width: 14px; height: 14px; cursor: nesw-resize; }
+.chat-resize-se { bottom: 0; right: 0;   width: 14px; height: 14px; cursor: nwse-resize; }
+
+/* Subtle grip dots on se/nw corner hints */
+.chat-resize-se::after,
+.chat-resize-nw::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid rgba(125, 171, 90, 0.25);
+  border-bottom: 1.5px solid rgba(125, 171, 90, 0.25);
+}
+.chat-resize-se::after { bottom: 3px; right: 3px; }
+.chat-resize-nw::after { top: 3px; left: 3px; transform: rotate(180deg); }
 
 @media (max-width: 480px) {
   #chat-panel { right: 0; bottom: 0; width: 100%; max-width: 100%; border-radius: 16px 16px 0 0; height: 70vh; }
