@@ -473,6 +473,109 @@ footer {
   letter-spacing: 0.05em;
 }
 
+/* ERA BLOCKS */
+.era-block {
+  position: relative;
+}
+
+.era-marker {
+  padding: 5rem 4rem 0;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.era-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.era-title--before {
+  color: var(--muted);
+}
+
+.era-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* AFTER AI SECTION */
+.after-ai-section {
+  padding: 3.5rem 4rem 6rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.handwritten-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+  opacity: 0.65;
+}
+
+/* MARKDOWN BODY */
+.markdown-body {
+  max-width: 720px;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: rgba(240,236,224,0.85);
+}
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  font-family: 'Lora', serif;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.markdown-body h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 2.5rem 0 1rem; }
+.markdown-body h2 { font-size: clamp(1.4rem, 2.5vw, 1.9rem); margin: 2rem 0 0.75rem; }
+.markdown-body h3 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; }
+.markdown-body p { margin-bottom: 1.4rem; }
+.markdown-body a { color: var(--accent); text-decoration: underline; }
+.markdown-body a:hover { color: #8fbc6a; }
+.markdown-body strong { color: var(--text); font-weight: 600; }
+.markdown-body em { font-style: italic; color: rgba(240,236,224,0.7); }
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+.markdown-body li { margin-bottom: 0.5rem; }
+.markdown-body code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.88em;
+  background: var(--bg-card2);
+  padding: 0.15em 0.45em;
+  border-radius: 3px;
+  color: var(--accent);
+}
+.markdown-body blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--muted);
+  font-style: italic;
+}
+.markdown-body hr {
+  border: none;
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 2rem 0;
+}
+.md-loading {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
 /* DIVIDER */
 .full-divider {
   width: 100%;
@@ -496,6 +599,8 @@ footer {
   .nav-links { display: none; }
   .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
   .hero { padding-top: 7rem; }
+  .era-marker { padding: 3.5rem 1.5rem 0; }
+  .after-ai-section { padding: 2.5rem 1.5rem 4rem; }
   .exp-header { flex-direction: column; }
   .edu-year { display: none; }
 }
