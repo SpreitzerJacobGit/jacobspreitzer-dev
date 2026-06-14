@@ -504,15 +504,6 @@ footer {
   color: var(--muted);
 }
 
-.era-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.78rem;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-  margin-bottom: 1.5rem;
-  max-width: 480px;
-}
-
 .era-rule {
   width: 100%;
   height: 1px;
