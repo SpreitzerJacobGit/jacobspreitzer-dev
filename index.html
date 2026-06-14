@@ -255,19 +255,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="js/background.js"></script>
 <script src="js/name-animation.js"></script>
-<script src="js/chat.js"></script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-toggle" aria-label="Open chat">
-  <!-- Chat icon -->
-  <svg class="icon-chat" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.02 2 11c0 2.89 1.38 5.47 3.56 7.18L4 22l4.18-1.56C9.38 20.79 10.66 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm1 13H7v-2h6v2zm2-4H7V9h8v2z"/>
-  </svg>
-  <!-- Close icon -->
-  <svg class="icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-  </svg>
-</button>
+<div id="chat-launcher">
+  <div id="fun-facts-ticker">
+    <span class="fun-facts-label">fun fact</span>
+    <span id="fun-facts-text"></span>
+  </div>
+  <button id="chat-toggle" aria-label="Open chat">
+    <!-- Chat icon -->
+    <svg class="icon-chat" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.02 2 11c0 2.89 1.38 5.47 3.56 7.18L4 22l4.18-1.56C9.38 20.79 10.66 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2zm1 13H7v-2h6v2zm2-4H7V9h8v2z"/>
+    </svg>
+    <!-- Close icon -->
+    <svg class="icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+  </button>
+</div>
 
 <div id="chat-panel" role="dialog" aria-label="Chat with Jacob's AI assistant">
   <div class="chat-header">
@@ -296,5 +301,6 @@
   </div>
 </div>
 
+<script src="js/chat.js"></script>
 </body>
 </html>

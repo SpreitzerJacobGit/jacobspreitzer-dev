@@ -1,16 +1,57 @@
 (function () {
-  const toggle = document.getElementById('chat-toggle');
-  const panel  = document.getElementById('chat-panel');
+  const toggle  = document.getElementById('chat-toggle');
+  const panel   = document.getElementById('chat-panel');
   const messages = document.getElementById('chat-messages');
-  const input  = document.getElementById('chat-input');
+  const input   = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
+  const ticker  = document.getElementById('fun-facts-ticker');
+  const tickerText = document.getElementById('fun-facts-text');
 
-  const SUGGESTIONS = [
-    "What does Jacob do for work?",
-    "What tech does he specialize in?",
-    "What are his hobbies?",
-    "Is he available for freelance?",
+  const FACTS = [
+    "Likes 30–90 mile bike rides on road and gravel",
+    "Brews tea the long way — gongfu style, every time",
+    "Serves with a Stiga Legacy Carbon blade",
+    "Switches between pickleball and table tennis depending on the day",
+    "Has an opinion on every pu’erh tea he’s ever tried",
+    "Thinks in systems, even outside of work",
+    "Prefers split ergo keyboards with lots of layers",
+    "Certified Sage X3 Developer",
+    "Minored in both Math and Big Data",
+    "Heavy Claude power user",
   ];
+
+  let factIndex = Math.floor(Math.random() * FACTS.length);
+  let factTimer = null;
+
+  function showFact(text) {
+    tickerText.textContent = text;
+    ticker.classList.remove('fading');
+    ticker.classList.add('visible');
+  }
+
+  function rotateFact() {
+    ticker.classList.add('fading');
+    ticker.classList.remove('visible');
+    setTimeout(() => {
+      factIndex = (factIndex + 1) % FACTS.length;
+      showFact(FACTS[factIndex]);
+    }, 520);
+  }
+
+  function startTicker() {
+    if (factTimer) return;
+    showFact(FACTS[factIndex]);
+    factTimer = setInterval(rotateFact, 5000);
+  }
+
+  function stopTicker() {
+    ticker.classList.remove('visible');
+    ticker.classList.add('fading');
+    clearInterval(factTimer);
+    factTimer = null;
+  }
+
+  setTimeout(startTicker, 1200);
 
   let isStreaming = false;
 
@@ -20,8 +61,11 @@
     toggle.classList.toggle('open');
     panel.classList.toggle('open');
     if (opening) {
+      stopTicker();
       input.focus();
       scrollToBottom();
+    } else {
+      setTimeout(startTicker, 400);
     }
   });
 
