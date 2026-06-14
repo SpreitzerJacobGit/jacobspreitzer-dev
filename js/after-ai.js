@@ -8,7 +8,11 @@
       return r.text();
     })
     .then(function (md) {
-      container.innerHTML = marked.parse(md);
+      var html = marked.parse(md);
+      // Convert ==phrase== markers into physics-animated spans
+      html = html.replace(/==([\s\S]*?)==/g, '<span class="physics-word">$1</span>');
+      container.innerHTML = html;
+      document.dispatchEvent(new CustomEvent('afterai-rendered'));
     })
     .catch(function () {
       container.innerHTML = '<p class="md-loading">Content unavailable.</p>';

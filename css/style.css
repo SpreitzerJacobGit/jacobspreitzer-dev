@@ -576,6 +576,21 @@ footer {
   color: var(--muted);
 }
 
+/* Physics-animated emphasis words */
+.physics-word {
+  display: inline;
+  font-size: 1.18em;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--accent);
+  background: rgba(125, 171, 90, 0.1);
+  border-radius: 4px;
+  padding: 0.08em 0.3em;
+  letter-spacing: -0.01em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 /* DIVIDER */
 .full-divider {
   width: 100%;
