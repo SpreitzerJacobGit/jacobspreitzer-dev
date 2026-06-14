@@ -9,8 +9,12 @@
     })
     .then(function (md) {
       var html = marked.parse(md);
-      // Convert ==phrase== markers into physics-animated spans
-      html = html.replace(/==([\s\S]*?)==/g, '<span class="physics-word">$1</span>');
+      // Convert ==phrase== markers into numbered physics-word spans
+      var n = 0;
+      html = html.replace(/==([\s\S]*?)==/g, function (_, text) {
+        n++;
+        return '<span class="physics-word physics-word--' + n + '">' + text + '</span>';
+      });
       container.innerHTML = html;
       document.dispatchEvent(new CustomEvent('afterai-rendered'));
     })

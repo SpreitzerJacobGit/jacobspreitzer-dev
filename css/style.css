@@ -576,19 +576,55 @@ footer {
   color: var(--muted);
 }
 
-/* Physics-animated emphasis words */
+/* Physics-animated emphasis words — each variant is visually distinct */
 .physics-word {
   display: inline;
-  font-size: 1.18em;
-  font-weight: 700;
-  font-style: italic;
-  color: var(--accent);
-  background: rgba(125, 171, 90, 0.1);
   border-radius: 4px;
   padding: 0.08em 0.3em;
-  letter-spacing: -0.01em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+/* 1 — "scope": large, heavy, green. The thesis word. */
+.physics-word--1 {
+  font-size: 1.32em;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--accent);
+  background: rgba(125, 171, 90, 0.13);
+  letter-spacing: -0.02em;
+}
+
+/* 2 — "wouldn't have been attempted": amber, confession tone */
+.physics-word--2 {
+  font-size: 1.08em;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--accent2);
+  background: rgba(196, 135, 74, 0.11);
+  letter-spacing: 0.01em;
+}
+
+/* 3 — "systematically": lighter weight, muted green, quieter */
+.physics-word--3 {
+  font-size: 1.14em;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(125, 171, 90, 0.72);
+  background: rgba(125, 171, 90, 0.06);
+  letter-spacing: 0.02em;
+}
+
+/* 4 — "distance": large, light-weight, warm text, green underline only */
+.physics-word--4 {
+  font-size: 1.38em;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  background: transparent;
+  border-radius: 0;
+  padding: 0 0.15em 0.06em;
+  border-bottom: 1px solid rgba(125, 171, 90, 0.45);
 }
 
 /* DIVIDER */
