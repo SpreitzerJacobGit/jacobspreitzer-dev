@@ -175,6 +175,7 @@
 
     bubble.classList.remove('streaming');
     scrollToBottom();
+    document.dispatchEvent(new CustomEvent('aiInference'));
   }
 
   // ── DOM helpers ───────────────────────────────────────────────────────────
